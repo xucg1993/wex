@@ -72,7 +72,7 @@
         $.getJSON("/wx/coach/findUserCoachList.action", function (data) {
             data.forEach(function (x) {
                 var htmlStr = '';
-                htmlStr += '<a href="javascript:alpopup(' + x.mobile + ',' + x.uid + ',' + x.username +');" class="weui_media_box weui_media_appmsg">';
+                htmlStr += '<a href="javascript:alpopup(' + x.mobile + ',' + x.uid +');" class="weui_media_box weui_media_appmsg">';
                 htmlStr += '<div class="weui_media_hd">';
                 htmlStr += '<img class="weui_media_appmsg_thumb" src="/weui/dist/example/images/icon_intro.png" alt="">';
                 htmlStr += '</div>';
@@ -102,7 +102,7 @@
     }
     ;
     var mob;
-    function alpopup(mobile,uid,name) {
+    function alpopup(mobile,uid) {
         mob = mobile;
         $("#about").popup();
     }
