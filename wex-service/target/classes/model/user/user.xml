@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuc.wex.dao.user.UserDao">
+
+    <sql id="table_name">wex_user</sql>
+    <sql id="from_table_name"> from <include refid="table_name"/> </sql>
+    <sql id="insert_table_name"> insert into <include refid="table_name"/> </sql>
+    <sql id="update_table_name"> update <include refid="table_name"/> </sql>
+    <sql id="delete_table_name"> delete  <include refid="from_table_name"/> </sql>
+    <sql id="countSql">select count(1) from  <include refid="table_name"/> </sql>
+
+    <sql id="selectSql">
+        select uid,idcardno,username,password,mobile,weixin,sex,age,status,subject1,subject2,subject3,subject4,entrydate,enddate <include refid="from_table_name"/>
+    </sql>
+    <sql id="insertSql">
+        <include refid="insert_table_name"/>(idcardno,username,password,mobile,weixin,sex,age,status,subject1,subject2,subject3,subject4,entrydate,enddate)
+        values(#{idcardno},#{username},#{password},#{mobile},#{weixin},#{sex},#{age},#{status},#{subject1},#{subject2},#{subject3},#{subject4},#{entrydate},#{enddate})
+    </sql>
+
+    <sql id="whereSql">
+        <trim prefix="where">1 = 1
+            <if test="uid > 0">
+                and uid = #{uid}
+            </if>
+            <if test="idcardno != null and idcardno != '' ">
+                and idcardno = #{idcardno}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="findUser" parameterType="User" resultType="User">
+        <include refid="selectSql" />
+        <include refid="whereSql"/>
+    </select>
+
+    <select id="findUserList" parameterType="User" resultType="User">
+        <include refid="selectSql" />
+        <include refid="whereSql"/>
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+    <include refid="insertSql"/>
+    </insert>
+
+    <select id="findUserByIdcardno" parameterType="User" resultType="User">
+        <include refid="selectSql" /> where idcardno = #{idcardno}
+    </select>
+
+    <update id="updateUserByIdcardno" parameterType="User">
+        <include refid="update_table_name"/>
+        set entrydate = #{entrydate},status = #{status}
+        where idcardno = #{idcardno}
+    </update>
+    <!--<select id="findAdminUserCount" parameterType="AdminUser" resultType="int">-->
+        <!--select count(1) <include refid="from_table_name" /> where username = #{username}-->
+    <!--</select>-->
+
+    <!--<select id="findAllAdminUserCount" resultType="int">-->
+        <!--select count(1) <include refid="from_table_name" /> where status = 2-->
+    <!--</select>-->
+
+    <!--<sql id="orderbySql">-->
+        <!--order by updatetime desc-->
+    <!--</sql>-->
+    <!--<sql id="limitSql">-->
+        <!--<if test="numPerPage != null">-->
+            <!--limit #{startIndex} , #{numPerPage}-->
+        <!--</if>-->
+    <!--</sql>-->
+
+
+    <!--<select id="findLoginPageList"  parameterType="AdminUser" resultType="AdminUser">-->
+        <!--<include refid="selectSql"/>-->
+        <!--<include refid="whereSql" />-->
+        <!--<include refid="orderbySql" />-->
+        <!--<include refid="limitSql" />-->
+    <!--</select>-->
+
+    <!--<select id="findLoginPageListCount" parameterType="AdminUser" resultType="int">-->
+        <!--select count(1) <include refid="from_table_name"/>-->
+        <!--<include refid="whereSql" />-->
+    <!--</select>-->
+
+
+
+
+    <!--<update id="UpdateAdminUser" parameterType="AdminUser">-->
+        <!--<include refid="update_table_name"/>-->
+        <!--set realname = #{realname}, updater = #{updater}, updatetime = ${updatetime}-->
+        <!--where id = #{id}-->
+    <!--</update>-->
+</mapper>
